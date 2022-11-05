@@ -28,11 +28,14 @@
     </parent>
 
     <artifactId>chronicle-logger</artifactId>
-    <version>4.22ea3-SNAPSHOT</version>
+    <version>4.22ea3-mf-1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>OpenHFT/Chronicle-Logger</name>
     <description>OpenHFT :: High Performance Logging</description>
+    <properties>
+        <maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -172,15 +175,39 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>${maven-release-plugin.version}</version>
+                <configuration>
+                    <tagNameFormat>v_@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!--
+                      During release:perform, enable the "release" profile
+                     -->
+                    <releaseProfiles>release</releaseProfiles>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
     <scm>
-        <url>scm:git:git@github.com:OpenHFT/Chronicle-Logger.git</url>
-        <connection>scm:git:git@github.com:OpenHFT/Chronicle-Logger.git</connection>
-        <developerConnection>scm:git:git@github.com:OpenHFT/Chronicle-Logger.git</developerConnection>
-        <tag>master</tag>
+        <url>https://github.com/mvfranz/Chronicle-Logger</url>
+        <connection>scm:git:git@github.com:mvfranz/Chronicle-Logger.git</connection>
+        <developerConnection>scm:git:git@github.com:mvfranz/Chronicle-Logger.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus.snapshots.http</id>
+            <url>http://192.168.1.140:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus.releases.http</id>
+            <url>http://192.168.1.140:8081/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 </project>
 
